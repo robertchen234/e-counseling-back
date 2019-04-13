@@ -6,7 +6,7 @@ class Api::V1::TasksController < ApplicationController
     render json: @tasks
   end
   def create
-    @task = Task.create(task_params)
+    @task = Task.create(patient_id: params[:patient_id], counselor_id: params[:counselor_id], task: params[:task], complete: params[:complete])
     render json: @task, status: :accepted
   end
   def update
@@ -24,7 +24,7 @@ class Api::V1::TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:task, :complete)
+    params.require(:task).permit(:counselor_id, :patient_id, :task, :complete)
   end
 
   def find_task
